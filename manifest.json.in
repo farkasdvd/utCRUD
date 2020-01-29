@@ -1,0 +1,15 @@
+{
+    "name": "utcrud.hsl",
+    "description": "Native CRUD application.",
+    "architecture": "@CLICK_ARCH@",
+    "title": "utCRUD",
+    "hooks": {
+        "utCRUD": {
+            "apparmor": "utCRUD.apparmor",
+            "desktop":  "utCRUD.desktop"
+        }
+    },
+    "version": "0.1",
+    "maintainer": "David Farkas <dvdfrks@gmail.com>",
+    "framework" : "ubuntu-sdk-16.04"
+}
