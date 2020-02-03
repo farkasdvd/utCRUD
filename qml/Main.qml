@@ -25,29 +25,32 @@ MainView {
                     Action {
                         iconName: "add"
                         onTriggered: {
-                            body.model += 1
+                            tableList.model.insert(0, { "name": "Books", "columns": 4, "rows": 10 })
                         }
                     }
                 ]
             }
         }
+
         ListView {
-            id: body
+            id: tableList
             anchors {
                 top: header.bottom
                 left: parent.left
                 right: parent.right
                 bottom: parent.bottom
             }
-            model: 0
+            model:
+                ListModel {}
             delegate:
                 ListItem {
-                    Label {
-                        anchors.fill: parent
-                        text: "Table #" + modelData
-
-                        verticalAlignment: Label.AlignVCenter
-                        horizontalAlignment: Label.AlignHCenter
+                    height: tableItem.height + divider.height
+                    ListItemLayout {
+                        id: tableItem
+                        title.text: name
+                        title.textSize: Label.Large
+                        subtitle.text: columns + " columns"
+                        summary.text: rows + " rows"
                     }
                 }
         }
