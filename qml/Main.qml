@@ -13,7 +13,20 @@ MainView {
     width: units.gu(45)
     height: units.gu(75)
 
+    PageStack {
+        id: pageStack
+
+        Component.onCompleted: {
+            pageStack.push(homePage)
+        }
+    }
+
+    ListModel {
+        id: tableModel
+    }
+
     Page {
+        id: homePage
         anchors.fill: parent
 
         header: PageHeader {
@@ -23,9 +36,9 @@ MainView {
             trailingActionBar {
                 actions: [
                     Action {
-                        iconName: "add"
+                        iconName: 'add'
                         onTriggered: {
-                            tableList.model.insert(0, { "name": "Books", "columns": 4, "rows": 10 })
+                            pageStack.push(Qt.resolvedUrl('CreatePage.qml'))
                         }
                     }
                 ]
@@ -40,8 +53,7 @@ MainView {
                 right: parent.right
                 bottom: parent.bottom
             }
-            model:
-                ListModel {}
+            model: tableModel
             delegate:
                 ListItem {
                     height: tableItem.height + divider.height
@@ -49,8 +61,8 @@ MainView {
                         id: tableItem
                         title.text: name
                         title.textSize: Label.Large
-                        subtitle.text: columns + " columns"
-                        summary.text: rows + " rows"
+                        subtitle.text: columns + ' columns'
+                        summary.text: rows + ' rows'
                     }
                 }
         }
