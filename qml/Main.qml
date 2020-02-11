@@ -3,6 +3,7 @@ import Ubuntu.Components 1.3
 //import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import Qt.labs.settings 1.0
+import Ubuntu.Components.Popups 1.3
 
 MainView {
     id: root
@@ -45,6 +46,34 @@ MainView {
             }
         }
 
+        Component {
+            id: deleteConfirmation
+
+            Dialog {
+                property int tableIndex: -1
+                
+                id: deleteConfirmationDialog
+                title: 'Delete'
+                text: 'Are you sure to delete table <b>' + tableModel.get(tableIndex).name + '</b>?'
+
+                Button {
+                    text: 'Delete'
+                    color: UbuntuColors.red
+                    onClicked: {
+                        tableModel.remove(tableIndex)
+                        PopupUtils.close(deleteConfirmationDialog)
+                    }
+                }
+                Button {
+                    text: 'Cancel'
+                    color: UbuntuColors.green
+                    onClicked: {
+                        PopupUtils.close(deleteConfirmationDialog)
+                    }
+                }
+            }
+        }
+
         ListView {
             id: tableList
             anchors {
@@ -63,6 +92,16 @@ MainView {
                         title.textSize: Label.Large
                         subtitle.text: columns + ' columns'
                         summary.text: rows + ' rows'
+                    }
+                    leadingActions: ListItemActions {
+                        actions: [
+                            Action {
+                                iconName: 'delete'
+                                onTriggered: {
+                                    PopupUtils.open(deleteConfirmation, homePage, {'tableIndex': index})
+                                }
+                            }
+                        ]
                     }
                 }
         }
