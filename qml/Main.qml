@@ -3,6 +3,7 @@ import Ubuntu.Components 1.3
 //import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import Qt.labs.settings 1.0
+import Ubuntu.Components.Popups 1.3
 
 MainView {
     id: root
@@ -56,13 +57,27 @@ MainView {
             model: tableModel
             delegate:
                 ListItem {
-                    height: tableItem.height + divider.height
+                    id: tableItem
+
+                    property string tableName: name
+
+                    height: tableSummary.height + divider.height
                     ListItemLayout {
-                        id: tableItem
-                        title.text: name
+                        id: tableSummary
+                        title.text: tableItem.tableName
                         title.textSize: Label.Large
                         subtitle.text: columns + ' columns'
                         summary.text: rows + ' rows'
+                    }
+                    leadingActions: ListItemActions {
+                        actions: [
+                            Action {
+                                iconName: 'delete'
+                                onTriggered: {
+                                    PopupUtils.open(Qt.resolvedUrl('DeleteConfirmationDialog.qml'), homePage, {targetType: 'table', targetName: tableItem.tableName, targetModel: tableModel, targetIndex: index})
+                                }
+                            }
+                        ]
                     }
                 }
         }
