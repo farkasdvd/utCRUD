@@ -46,34 +46,6 @@ MainView {
             }
         }
 
-        Component {
-            id: deleteConfirmation
-
-            Dialog {
-                property int tableIndex: -1
-                
-                id: deleteConfirmationDialog
-                title: 'Delete'
-                text: 'Are you sure to delete table <b>' + tableModel.get(tableIndex).name + '</b>?'
-
-                Button {
-                    text: 'Delete'
-                    color: UbuntuColors.red
-                    onClicked: {
-                        tableModel.remove(tableIndex)
-                        PopupUtils.close(deleteConfirmationDialog)
-                    }
-                }
-                Button {
-                    text: 'Cancel'
-                    color: UbuntuColors.green
-                    onClicked: {
-                        PopupUtils.close(deleteConfirmationDialog)
-                    }
-                }
-            }
-        }
-
         ListView {
             id: tableList
             anchors {
@@ -85,10 +57,14 @@ MainView {
             model: tableModel
             delegate:
                 ListItem {
-                    height: tableItem.height + divider.height
+                    id: tableItem
+
+                    property string tableName: name
+
+                    height: tableSummary.height + divider.height
                     ListItemLayout {
-                        id: tableItem
-                        title.text: name
+                        id: tableSummary
+                        title.text: tableItem.tableName
                         title.textSize: Label.Large
                         subtitle.text: columns + ' columns'
                         summary.text: rows + ' rows'
@@ -98,7 +74,7 @@ MainView {
                             Action {
                                 iconName: 'delete'
                                 onTriggered: {
-                                    PopupUtils.open(deleteConfirmation, homePage, {'tableIndex': index})
+                                    PopupUtils.open(Qt.resolvedUrl('DeleteConfirmationDialog.qml'), homePage, {targetType: 'table', targetName: tableItem.tableName, targetModel: tableModel, targetIndex: index})
                                 }
                             }
                         ]
