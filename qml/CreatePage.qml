@@ -22,7 +22,7 @@ Page {
         }
 
         property int tableColumns: 0
-        
+
         TextField {
             id: tableName
             width: parent.width
