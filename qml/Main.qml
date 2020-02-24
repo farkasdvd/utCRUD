@@ -66,7 +66,7 @@ MainView {
                         id: tableSummary
                         title.text: tableItem.tableName
                         title.textSize: Label.Large
-                        subtitle.text: columns + ' columns'
+                        subtitle.text: columns.count + ' columns'
                         summary.text: rows + ' rows'
                     }
                     leadingActions: ListItemActions {
