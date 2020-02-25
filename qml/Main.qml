@@ -79,6 +79,11 @@ MainView {
                             }
                         ]
                     }
+                    action: Action {
+                        onTriggered: {
+                            pageStack.push(Qt.resolvedUrl('ReadPage.qml'), {tableIndex: index})
+                        }
+                    }
                 }
         }
     }

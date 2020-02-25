@@ -11,16 +11,31 @@ Page {
         id: header
         title: i18n.tr('Create')
         
+        function addTableToModel(model, tablename, tablecolumns) {
+            var columns = []
+            for( var i = 0; i < tablecolumns.count; ++i) {
+                columns.push({'name': tablecolumns.get(i).name})
+            }
+            model.insert(0, { 'name': tablename, 'columns': columns, 'rows': 0 })
+        }
+
         trailingActionBar.actions: [
+            Action {
+                iconName: 'add'
+                enabled: tableName.length > 0
+                onTriggered: {
+                    header.addTableToModel(tableModel, tableName.text, columnModel)
+                    tableName.text = ''
+                    columnName.text = ''
+                    columnModel.clear()
+                    header.title = header.title + ' another'
+                }
+            },
             Action {
                 iconName: 'ok'
                 enabled: tableName.length > 0
                 onTriggered: {
-                    var columns = []
-                    for( var i = 0; i < columnModel.count; ++i) {
-                        columns.push({'name': columnModel.get(i).name})
-                    }
-                    tableModel.insert(0, { 'name': tableName.text, 'columns': columns, 'rows': 0 })
+                    header.addTableToModel(tableModel, tableName.text, columnModel)
                     pageStack.pop()
                 }
             }
