@@ -11,9 +11,6 @@ MainView {
     applicationName: 'utcrud.hsl'
     automaticOrientation: true
 
-    width: units.gu(45)
-    height: units.gu(75)
-
     PageStack {
         id: pageStack
 

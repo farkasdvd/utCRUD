@@ -27,7 +27,7 @@ Column {
         Rectangle {
             id: vTableCellDivider
 
-            width: tableCellRoot.bold ? 2 : 1
+            width: tableCellRoot.bold ? units.gu(0.2) : units.gu(0.1)
             height: tableCellContent.height
             color: UbuntuColors.silk
         }
@@ -36,7 +36,7 @@ Column {
         id: hTableCellDivider
 
         width: tableCellRoot.width
-        height: tableCellRoot.bold ? 2 : 1
+        height: tableCellRoot.bold ? units.gu(0.2) : units.gu(0.1)
         color: UbuntuColors.silk
     }
 }

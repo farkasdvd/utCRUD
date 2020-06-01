@@ -12,8 +12,8 @@ Page {
         }
         return justifiedCellWidth
     }
-    property int rowIndexCellWidth: 60
-    property int cellHeight: 50
+    property int rowIndexCellWidth: units.gu(6)
+    property int cellHeight: units.gu(5)
 
     anchors.fill: parent
 
@@ -71,23 +71,24 @@ Page {
     }
 
     Rectangle {
+        id: tableBody
+
         anchors {
             top: tableHeader.bottom
+            bottom: readPage.bottom
             left: readPage.left
+            right: readPage.right
         }
-
-        width: readPage.width
-        height: readPage.height - tableHeader.height
 
         Row {
             Rectangle {
+                id: tableBodyIndexColumn
+
                 width: readPage.rowIndexCellWidth
-                height: readPage.height - tableHeader.height
+                height: tableBody.height
                 clip: true
 
                 Column {
-                    id: c1
-
                     y: -tableContent.contentY
 
                     Repeater {
@@ -105,15 +106,15 @@ Page {
             Flickable {
                 id: tableContent
 
-                width: readPage.width - c1.width
-                height: readPage.height - tableHeader.height
+                width: readPage.width - tableBodyIndexColumn.width
+                height: tableBody.height
                 clip: true
                 boundsBehavior: Flickable.StopAtBounds
-                contentWidth: tableBody.width
-                contentHeight: tableBody.height
+                contentWidth: tableContentGrid.width
+                contentHeight: tableContentGrid.height
 
                 Column {
-                    id: tableBody
+                    id: tableContentGrid
 
                     Repeater {
                         model: tableModel.get(tableIndex).rows
