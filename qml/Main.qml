@@ -11,9 +11,6 @@ MainView {
     applicationName: 'utcrud.hsl'
     automaticOrientation: true
 
-    width: units.gu(45)
-    height: units.gu(75)
-
     PageStack {
         id: pageStack
 
@@ -22,16 +19,18 @@ MainView {
         }
     }
 
-    ListModel {
+    TestDatabase {
         id: tableModel
     }
 
     Page {
         id: homePage
+
         anchors.fill: parent
 
         header: PageHeader {
             id: header
+
             title: i18n.tr('utCRUD')
 
             trailingActionBar {
@@ -48,12 +47,14 @@ MainView {
 
         ListView {
             id: tableList
+
             anchors {
                 top: header.bottom
                 left: parent.left
                 right: parent.right
                 bottom: parent.bottom
             }
+
             model: tableModel
             delegate:
                 ListItem {
@@ -66,8 +67,8 @@ MainView {
                         id: tableSummary
                         title.text: tableItem.tableName
                         title.textSize: Label.Large
-                        subtitle.text: columns.count + ' columns'
-                        summary.text: rows + ' rows'
+                        subtitle.text: header.count + ' columns'
+                        summary.text: rows.count + ' rows'
                     }
                     leadingActions: ListItemActions {
                         actions: [
@@ -78,6 +79,11 @@ MainView {
                                 }
                             }
                         ]
+                    }
+                    action: Action {
+                        onTriggered: {
+                            pageStack.push(Qt.resolvedUrl('ReadPage.qml'), {tableIndex: index})
+                        }
                     }
                 }
         }
