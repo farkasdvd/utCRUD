@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: utcrud.hsl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-24 15:01+0000\n"
+"POT-Creation-Date: 2020-06-01 12:35+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,10 +17,14 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../qml/Main.qml:35 utCRUD.desktop.in.h:1
+#: ../qml/CreatePage.qml:14
+msgid "Create"
+msgstr ""
+
+#: ../qml/Main.qml:34
 msgid "utCRUD"
 msgstr ""
 
-#: ../qml/CreatePage.qml:12
-msgid "Create"
+#: utCRUD.desktop.in.h:1
+msgid "utCRUD\r"
 msgstr ""
