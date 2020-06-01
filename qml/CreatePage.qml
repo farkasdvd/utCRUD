@@ -5,24 +5,30 @@ import Ubuntu.Components.Popups 1.3
 
 Page {
     id: createPage
+
     anchors.fill: parent
 
     header: PageHeader {
         id: header
+
         title: i18n.tr('Create')
-        
+
         function addTableToModel(model, tablename, tablecolumns) {
             var columns = []
             for( var i = 0; i < tablecolumns.count; ++i) {
-                columns.push({'name': tablecolumns.get(i).name})
+                columns.push({'value': tablecolumns.get(i).value})
             }
-            model.insert(0, { 'name': tablename, 'columns': columns, 'rows': 0 })
+            model.insert(0, { 'name': tablename, 'header': columns, 'rows': [] })
+        }
+
+        function isTableReady() {
+            return (tableName.length > 0) && (columnModel.count > 0)
         }
 
         trailingActionBar.actions: [
             Action {
                 iconName: 'add'
-                enabled: tableName.length > 0
+                enabled: header.isTableReady()
                 onTriggered: {
                     header.addTableToModel(tableModel, tableName.text, columnModel)
                     tableName.text = ''
@@ -33,7 +39,7 @@ Page {
             },
             Action {
                 iconName: 'ok'
-                enabled: tableName.length > 0
+                enabled: header.isTableReady()
                 onTriggered: {
                     header.addTableToModel(tableModel, tableName.text, columnModel)
                     pageStack.pop()
@@ -44,22 +50,26 @@ Page {
 
     Column {
         id: tableForm
+
         anchors {
             top: header.bottom
             topMargin: units.gu(2)
             left: parent.left
             right: parent.right
         }
+
         spacing: units.gu(1)
 
         TextField {
             id: tableName
+
             anchors {
                 left: parent.left
                 leftMargin: units.gu(3)
                 right: parent.right
                 rightMargin: units.gu(3)
             }
+
             width: parent.width
             placeholderText: 'Table name'
             maximumLength: 32
@@ -75,12 +85,14 @@ Page {
         }
         TextField {
             id: columnName
+
             anchors {
                 left: parent.left
                 leftMargin: units.gu(3)
                 right: parent.right
                 rightMargin: units.gu(3)
             }
+
             width: parent.width
             placeholderText: 'Column name'
             maximumLength: 32
@@ -95,12 +107,13 @@ Page {
                 right: parent.right
                 rightMargin: units.gu(3)
             }
+
             width: parent.width
             text: 'Add column'
             color: UbuntuColors.graphite
             enabled: columnName.length > 0
             onClicked: {
-                columnModel.insert(0, {'name': columnName.text})
+                columnModel.insert(0, {'value': columnName.text})
                 columnName.text = ''
             }
         }
@@ -121,7 +134,7 @@ Page {
         delegate: ListItem {
             id: columnItem
 
-            property string columnName: name
+            property string columnName: value
 
             ListItemLayout {
                 title.text: columnName

@@ -25,6 +25,9 @@ Page {
         trailingActionBar.actions: [
             Action {
                 iconName: 'filters'
+            },
+            Action {
+                iconName: 'add'
             }
         ]
     }
@@ -81,6 +84,12 @@ Page {
         }
 
         Row {
+            TableCell {
+                width: readPage.width
+                height: readPage.cellHeight
+                visible: tableModel.get(tableIndex).rows.count == 0
+                content: 'Empty table. Click + to add a row.'
+            }
             Rectangle {
                 id: tableBodyIndexColumn
 
