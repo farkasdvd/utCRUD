@@ -1,6 +1,7 @@
 import QtQuick 2.4
 import Ubuntu.Components 1.3
 import Ubuntu.Components.ListItems 1.3 as ListItems
+import Ubuntu.Components.Popups 1.3
 
 Page {
     id: tableRowPage
@@ -10,10 +11,14 @@ Page {
 
     anchors.fill: parent
 
+    function isNewRowMode() {
+        return tableRowPage.rowIndex == -1
+    }
+
     function getPageTitle() {
         var title = tableModel.get(tableRowPage.tableIndex).name
 
-        if(tableRowPage.rowIndex == -1) {
+        if(isNewRowMode()) {
             title += ' (new row)'
         }
         else {
@@ -24,7 +29,7 @@ Page {
     }
 
     function getCellValue(index) {
-        if(tableRowPage.rowIndex == -1) {
+        if(isNewRowMode()) {
             return ''
         }
         return tableModel.get(tableRowPage.tableIndex).rows.get(tableRowPage.rowIndex).row.get(index).value
@@ -49,7 +54,7 @@ Page {
                         }
                     }
 
-                    if(tableRowPage.rowIndex == -1) {
+                    if(isNewRowMode()) {
                         tableModel.get(tableRowPage.tableIndex).rows.append({'row': row})
                     }
                     else {
@@ -58,6 +63,21 @@ Page {
                     }
 
                     pageStack.pop()
+                }
+            },
+            Action {
+                iconName: 'delete'
+                visible: !isNewRowMode()
+                onTriggered: {
+                    PopupUtils.open(Qt.resolvedUrl('DeleteConfirmationDialog.qml'),
+                                    tableRowPage,
+                                    {
+                                        targetType: 'row',
+                                        targetName: '#' + (tableRowPage.rowIndex + 1),
+                                        targetModel: tableModel.get(tableRowPage.tableIndex).rows,
+                                        targetIndex: tableRowPage.rowIndex,
+                                        popStack: true
+                                    })
                 }
             }
         ]
