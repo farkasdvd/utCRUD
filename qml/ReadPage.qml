@@ -106,11 +106,20 @@ Page {
                     Repeater {
                         model: tableModel.get(tableIndex).rows.count
 
-                        TableCell {
+                        MouseArea {
                             width: readPage.rowIndexCellWidth
                             height: readPage.cellHeight
-                            bold: true
-                            content: index + 1
+
+                            onClicked: {
+                                pageStack.push(Qt.resolvedUrl('TableRowPage.qml'), {tableIndex: readPage.tableIndex, rowIndex: index})
+                            }
+
+                            TableCell {
+                                width: parent.width
+                                height: parent.height
+                                bold: true
+                                content: index + 1
+                            }
                         }
                     }
                 }

@@ -53,7 +53,8 @@ Page {
                         tableModel.get(tableRowPage.tableIndex).rows.append({'row': row})
                     }
                     else {
-                        tableModel.get(tableRowPage.tableIndex).rows.set(tableRowPage.rowIndex, {'row': row})
+                        tableModel.get(tableRowPage.tableIndex).rows.remove(tableRowPage.rowIndex)
+                        tableModel.get(tableRowPage.tableIndex).rows.insert(tableRowPage.rowIndex, {'row': row})
                     }
 
                     pageStack.pop()
@@ -90,15 +91,8 @@ Page {
                         showDivider: false
                         text: tableModel.get(tableRowPage.tableIndex).header.get(index).value
                     }
-                    TextField {
-                        anchors {
-                            left: parent.left
-                            leftMargin: units.gu(3)
-                            right: parent.right
-                            rightMargin: units.gu(3)
-                        }
-
-                        text: getCellValue(index+1)
+                    InputField {
+                        text: getCellValue(index)
                     }
                 }
             }
