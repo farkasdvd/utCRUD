@@ -28,6 +28,9 @@ Page {
             },
             Action {
                 iconName: 'add'
+                onTriggered: {
+                    pageStack.push(Qt.resolvedUrl('TableRowPage.qml'), {tableIndex: readPage.tableIndex})
+                }
             }
         ]
     }
