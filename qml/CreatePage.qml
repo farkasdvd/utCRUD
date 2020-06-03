@@ -13,12 +13,12 @@ Page {
 
         title: i18n.tr('Create')
 
-        function addTableToModel(model, tablename, tablecolumns) {
+        function addTableToModel() {
             var columns = []
-            for( var i = 0; i < tablecolumns.count; ++i) {
-                columns.push({'value': tablecolumns.get(i).value})
+            for( var i = (columnModel.count - 1); i >= 0; --i) {
+                columns.push({'value': columnModel.get(i).value})
             }
-            model.insert(0, { 'name': tablename, 'header': columns, 'rows': [] })
+            tableModel.insert(0, { 'name': tableName.text, 'header': columns, 'rows': [] })
         }
 
         function isTableReady() {
@@ -30,7 +30,7 @@ Page {
                 iconName: 'add'
                 enabled: header.isTableReady()
                 onTriggered: {
-                    header.addTableToModel(tableModel, tableName.text, columnModel)
+                    header.addTableToModel()
                     tableName.text = ''
                     columnName.text = ''
                     columnModel.clear()
@@ -41,7 +41,7 @@ Page {
                 iconName: 'ok'
                 enabled: header.isTableReady()
                 onTriggered: {
-                    header.addTableToModel(tableModel, tableName.text, columnModel)
+                    header.addTableToModel()
                     pageStack.pop()
                 }
             }
@@ -60,22 +60,10 @@ Page {
 
         spacing: units.gu(1)
 
-        TextField {
+        InputField {
             id: tableName
 
-            anchors {
-                left: parent.left
-                leftMargin: units.gu(3)
-                right: parent.right
-                rightMargin: units.gu(3)
-            }
-
-            width: parent.width
             placeholderText: 'Table name'
-            maximumLength: 32
-            validator: RegExpValidator {
-                regExp: /^[a-zA-Z0-9]+$/
-            }
         }
         ListItems.ThinDivider {}
         ListItems.Subtitled {
@@ -83,22 +71,10 @@ Page {
             subText: 'Count: ' + columnModel.count
             showDivider: false
         }
-        TextField {
+        InputField {
             id: columnName
 
-            anchors {
-                left: parent.left
-                leftMargin: units.gu(3)
-                right: parent.right
-                rightMargin: units.gu(3)
-            }
-
-            width: parent.width
             placeholderText: 'Column name'
-            maximumLength: 32
-            validator: RegExpValidator {
-                regExp: /^[a-zA-Z0-9]+$/
-            }
         }
         Button {
             anchors {

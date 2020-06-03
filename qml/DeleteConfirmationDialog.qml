@@ -9,6 +9,7 @@ Dialog {
     property string targetName
     property var targetModel
     property int targetIndex
+    property bool popStack: false
 
     title: 'Delete'
     text: 'Are you sure you want to delete ' + targetType + ' <b>' + targetName + '</b>?'
@@ -19,6 +20,9 @@ Dialog {
         onClicked: {
             targetModel.remove(targetIndex)
             PopupUtils.close(deleteConfirmationDialog)
+            if(deleteConfirmationDialog.popStack) {
+                pageStack.pop()
+            }
         }
     }
     Button {
