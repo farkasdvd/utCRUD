@@ -35,7 +35,7 @@ Page {
         ]
     }
 
-    Rectangle {
+    Item {
         id: tableHeader
 
         anchors {
@@ -53,7 +53,7 @@ Page {
                 bold: true
                 content: '#'
             }
-            Rectangle {
+            Item {
                 width: readPage.width - readPage.rowIndexCellWidth
                 height: tableHeader.height
                 clip: true
@@ -76,7 +76,7 @@ Page {
         }
     }
 
-    Rectangle {
+    Item {
         id: tableBody
 
         anchors {
@@ -93,7 +93,7 @@ Page {
                 visible: tableModel.get(tableIndex).rows.count == 0
                 content: 'Empty table. Click + to add a row.'
             }
-            Rectangle {
+            Item {
                 id: tableBodyIndexColumn
 
                 width: readPage.rowIndexCellWidth
